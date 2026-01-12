@@ -74,17 +74,19 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
 
-        /* ================= CINEMATIC LOADER ================= */
+        /* ================= APPLE EVENT LOADER ================= */
 
-        @keyframes logoReveal {
+        @keyframes appleScaleIn {
             0% {
                 opacity: 0;
                 transform: scale(0.85);
+                filter: blur(6px);
             }
 
             60% {
                 opacity: 1;
                 transform: scale(1.05);
+                filter: blur(0);
             }
 
             100% {
@@ -92,34 +94,42 @@
             }
         }
 
-        @keyframes textReveal {
+        @keyframes appleGlow {
             0% {
-                opacity: 0;
-                letter-spacing: 0.6em;
+                box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255, 255, 255, 0.35);
             }
 
             100% {
-                opacity: 1;
-                letter-spacing: 0.4em;
+                box-shadow: 0 0 0 rgba(255, 255, 255, 0);
             }
         }
 
-        .animate-logo {
-            animation: logoReveal 1.2s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+        @keyframes appleTextReveal {
+            from {
+                opacity: 0;
+                letter-spacing: 0.8em;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                letter-spacing: 0.5em;
+                transform: translateY(0);
+            }
         }
 
-        .animate-text {
-            animation: textReveal 1.4s ease forwards;
-        }
-
-        /* Subtle cinematic grain */
+        /* Grain — Apple keynote subtle */
         #loader::after {
             content: "";
             position: absolute;
             inset: 0;
-            opacity: 0.025;
             pointer-events: none;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
         }
     </style>
     <script>
@@ -152,24 +162,26 @@
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <!-- ================= CINEMATIC LOADER ================= -->
+    <!-- ================= APPLE EVENT LOADER ================= -->
     <div id="loader"
-        class="fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700">
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-black transition-all duration-1000">
 
         <div class="relative flex flex-col items-center">
 
             <!-- Logo -->
-            <div
-                class="w-20 h-20 rounded-2xl bg-apple-dark text-white flex items-center justify-center text-2xl font-black tracking-tight animate-logo">
+            <div id="loader-logo"
+                class="w-24 h-24 rounded-3xl bg-white text-black flex items-center justify-center text-3xl font-black tracking-tight">
                 M
             </div>
 
-            <!-- Text -->
-            <p class="mt-6 text-[11px] font-bold tracking-[0.4em] uppercase text-zinc-500 animate-text">
+            <!-- Name -->
+            <p id="loader-text" class="mt-8 text-[11px] font-bold tracking-[0.5em] uppercase text-white opacity-0">
                 Mohit Agarwal
             </p>
 
         </div>
     </div>
+
 
 
     <div class="bg-noise"></div>
@@ -636,19 +648,42 @@
             }
         });
 
-        // ================= CINEMATIC LOADER =================
-        window.addEventListener("load", () => {
-            const loader = document.getElementById("loader");
+        // ================= APPLE EVENT LOADER =================
 
-            setTimeout(() => {
-                loader.classList.add("opacity-0");
+        const loader = document.getElementById("loader");
+        const logo = document.getElementById("loader-logo");
+        const text = document.getElementById("loader-text");
+
+        // Run only once per session
+        if (!sessionStorage.getItem("loaderPlayed")) {
+
+            window.addEventListener("load", () => {
+
+                logo.style.animation =
+                    "appleScaleIn 1.4s cubic-bezier(0.2, 1, 0.2, 1) forwards, appleGlow 2.2s ease-in-out";
 
                 setTimeout(() => {
-                    loader.style.display = "none";
-                }, 800);
+                    text.style.animation = "appleTextReveal 1.2s ease forwards";
+                }, 700);
 
-            }, 1600); // loader duration
-        });
+                // Fade to white
+                setTimeout(() => {
+                    loader.style.backgroundColor = "#ffffff";
+                    loader.style.opacity = "0";
+                }, 2600);
+
+                // Remove loader
+                setTimeout(() => {
+                    loader.style.display = "none";
+                    sessionStorage.setItem("loaderPlayed", "true");
+                }, 3600);
+
+            });
+
+        } else {
+            loader.style.display = "none";
+        }
+
 
 
         const observer = new IntersectionObserver((entries) => {
