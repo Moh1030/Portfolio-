@@ -73,6 +73,54 @@
             background: #F5F5F7;
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
         }
+
+        /* ================= CINEMATIC LOADER ================= */
+
+        @keyframes logoReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+
+            60% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes textReveal {
+            0% {
+                opacity: 0;
+                letter-spacing: 0.6em;
+            }
+
+            100% {
+                opacity: 1;
+                letter-spacing: 0.4em;
+            }
+        }
+
+        .animate-logo {
+            animation: logoReveal 1.2s cubic-bezier(0.2, 1, 0.2, 1) forwards;
+        }
+
+        .animate-text {
+            animation: textReveal 1.4s ease forwards;
+        }
+
+        /* Subtle cinematic grain */
+        #loader::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            opacity: 0.025;
+            pointer-events: none;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
     </style>
     <script>
         tailwind.config = {
@@ -103,6 +151,26 @@
          5. Evolution: Career timeline.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- ================= CINEMATIC LOADER ================= -->
+    <div id="loader"
+        class="fixed inset-0 z-[9999] flex items-center justify-center bg-white transition-opacity duration-700">
+
+        <div class="relative flex flex-col items-center">
+
+            <!-- Logo -->
+            <div
+                class="w-20 h-20 rounded-2xl bg-apple-dark text-white flex items-center justify-center text-2xl font-black tracking-tight animate-logo">
+                M
+            </div>
+
+            <!-- Text -->
+            <p class="mt-6 text-[11px] font-bold tracking-[0.4em] uppercase text-zinc-500 animate-text">
+                Mohit Agarwal
+            </p>
+
+        </div>
+    </div>
+
 
     <div class="bg-noise"></div>
 
@@ -158,12 +226,10 @@
                     class="w-5 h-5"></i></button>
             <button onclick="scrollToSection('contact')" class="w-10 h-10 text-zinc-600"><i data-lucide="mail"
                     class="w-5 h-5"></i></button>
-            <a href="./Mohit_CV.pdf"
-   download
-   title="Download CV"
-   class="w-10 h-10 bg-apple-blue rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-transform">
-    <i data-lucide="download" class="w-5 h-5"></i>
-</a>
+            <a href="./Mohit_CV.pdf" download title="Download CV"
+                class="w-10 h-10 bg-apple-blue rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-transform">
+                <i data-lucide="download" class="w-5 h-5"></i>
+            </a>
         </div>
     </nav>
 
@@ -445,9 +511,9 @@
                         </div>
                     </div>
                 </div>
-                
 
-                
+
+
             </div>
         </div>
     </section>
@@ -570,6 +636,21 @@
             }
         });
 
+        // ================= CINEMATIC LOADER =================
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+
+            setTimeout(() => {
+                loader.classList.add("opacity-0");
+
+                setTimeout(() => {
+                    loader.style.display = "none";
+                }, 800);
+
+            }, 1600); // loader duration
+        });
+
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -585,6 +666,5 @@
         });
     </script>
 </body>
-
 
 </html>
