@@ -652,41 +652,34 @@
             }
         });
 
-        // ================= APPLE EVENT LOADER =================
+        // ================= APPLE EVENT LOADER (ALWAYS SHOW) =================
 
-        const loader = document.getElementById("loader");
-        const logo = document.getElementById("loader-logo");
-        const text = document.getElementById("loader-text");
+window.addEventListener("load", () => {
+    const loader = document.getElementById("loader");
+    const logo = document.getElementById("loader-logo");
+    const text = document.getElementById("loader-text");
 
-        // Run only once per session
-        if (!sessionStorage.getItem("loaderPlayed")) {
+    // Start logo animation
+    logo.style.animation =
+        "appleScaleIn 1.4s cubic-bezier(0.2, 1, 0.2, 1) forwards, appleGlow 2.2s ease-in-out";
 
-            window.addEventListener("load", () => {
+    // Reveal text slightly later
+    setTimeout(() => {
+        text.style.animation = "appleTextReveal 1.2s ease forwards";
+    }, 400);
 
-                logo.style.animation =
-                    "appleScaleIn 1.4s cubic-bezier(0.2, 1, 0.2, 1) forwards, appleGlow 2.2s ease-in-out";
+    // Fade background from black → white → transparent
+    setTimeout(() => {
+        loader.style.backgroundColor = "#ffffff";
+        loader.style.opacity = "0";
+    }, 1000);
 
-                setTimeout(() => {
-                    text.style.animation = "appleTextReveal 1.2s ease forwards";
-                }, 700);
+    // Remove loader completely
+    setTimeout(() => {
+        loader.style.display = "none";
+    }, 1600);
+});
 
-                // Fade to white
-                setTimeout(() => {
-                    loader.style.backgroundColor = "#ffffff";
-                    loader.style.opacity = "0";
-                }, 2600);
-
-                // Remove loader
-                setTimeout(() => {
-                    loader.style.display = "none";
-                    sessionStorage.setItem("loaderPlayed", "true");
-                }, 3600);
-
-            });
-
-        } else {
-            loader.style.display = "none";
-        }
 
 
 
@@ -707,5 +700,6 @@
 </body>
 
 </html>
+
 
 
