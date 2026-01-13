@@ -10,11 +10,11 @@
 
     <title>Mohit Agarwal</title>
     <meta name="description"
-      content="Mohit Agarwal – Web Developer & Designer building modern, responsive websites and webapps.">
+        content="Mohit Agarwal – Web Developer & Designer building modern, responsive websites and webapps.">
 
-<link rel="canonical" href="https://mohitag.vercel.app/">
+    <link rel="canonical" href="https://mohitag.vercel.app/">
 
-<meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -296,10 +296,10 @@
                         class="bg-apple-dark text-white px-8 py-4 rounded-2xl font-bold text-sm tracking-widest uppercase hover:bg-zinc-800 transition-all flex items-center gap-3">
                         Get in Touch <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
-                     <a href="./Mohit_CV.pdf" download
-        class="bg-white text-black px-8 py-4 rounded-2xl font-bold text-sm tracking-widest uppercase border border-zinc-200 hover:bg-zinc-100 transition-all flex items-center gap-3">
-        Download CV <i data-lucide="download" class="w-4 h-4"></i>
-    </a>
+                    <a href="./Mohit_CV.pdf" download
+                        class="bg-white text-black px-8 py-4 rounded-2xl font-bold text-sm tracking-widest uppercase border border-zinc-200 hover:bg-zinc-100 transition-all flex items-center gap-3">
+                        Download CV <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
 
 
                 </div>
@@ -594,11 +594,23 @@
                 Actively exploring internships, freelance opportunities, and meaningful collaborations.
             </p>
 
-            <div class="flex flex-col md:flex-row justify-center gap-6">
-                <a href="mailto:agarwalmohit3010@gmail.com"
-                    class="bg-apple-dark text-white px-10 py-5 rounded-[20px] font-bold text-sm tracking-widest uppercase hover:bg-apple-blue transition-all flex items-center justify-center gap-3">
-                    agarwalmohit3010@gmail.com <i data-lucide="send" class="w-4 h-4"></i>
+            <div class="flex flex-col md:flex-row justify-center gap-6 w-full">
+                <a href="mailto:agarwalmohit3010@gmail.com" class="bg-apple-dark text-white
+          w-full sm:w-auto
+          px-6 md:px-10 py-5
+          rounded-[20px]
+          font-bold text-xs md:text-sm
+          tracking-widest uppercase
+          hover:bg-apple-blue transition-all
+          flex items-center justify-center gap-3">
+
+                    <span class="truncate max-w-full">
+                        agarwalmohit3010@gmail.com
+                    </span>
+
+                    <i data-lucide="send" class="w-4 h-4 flex-shrink-0"></i>
                 </a>
+
                 <div class="flex justify-center gap-4">
                     <a href="https://www.linkedin.com/in/mohitagarwal30" target="_blank" rel="noopener noreferrer"
                         class="w-16 h-16 border border-zinc-200 rounded-[20px] flex items-center justify-center text-zinc-400 hover:text-apple-dark transition-all">
@@ -664,31 +676,31 @@
 
         // ================= APPLE EVENT LOADER (ALWAYS SHOW) =================
 
-window.addEventListener("load", () => {
-    const loader = document.getElementById("loader");
-    const logo = document.getElementById("loader-logo");
-    const text = document.getElementById("loader-text");
+        window.addEventListener("load", () => {
+            const loader = document.getElementById("loader");
+            const logo = document.getElementById("loader-logo");
+            const text = document.getElementById("loader-text");
 
-    // Start logo animation
-    logo.style.animation =
-        "appleScaleIn 1.4s cubic-bezier(0.2, 1, 0.2, 1) forwards, appleGlow 2.2s ease-in-out";
+            // Start logo animation
+            logo.style.animation =
+                "appleScaleIn 1.4s cubic-bezier(0.2, 1, 0.2, 1) forwards, appleGlow 2.2s ease-in-out";
 
-    // Reveal text slightly later
-    setTimeout(() => {
-        text.style.animation = "appleTextReveal 1.2s ease forwards";
-    }, 700);
+            // Reveal text slightly later
+            setTimeout(() => {
+                text.style.animation = "appleTextReveal 1.2s ease forwards";
+            }, 700);
 
-    // Fade background from black → white → transparent
-    setTimeout(() => {
-        loader.style.backgroundColor = "#ffffff";
-        loader.style.opacity = "0";
-    }, 2600);
+            // Fade background from black → white → transparent
+            setTimeout(() => {
+                loader.style.backgroundColor = "#ffffff";
+                loader.style.opacity = "0";
+            }, 2600);
 
-    // Remove loader completely
-    setTimeout(() => {
-        loader.style.display = "none";
-    }, 3600);
-});
+            // Remove loader completely
+            setTimeout(() => {
+                loader.style.display = "none";
+            }, 3600);
+        });
 
 
 
@@ -710,14 +722,3 @@ window.addEventListener("load", () => {
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
