@@ -28,12 +28,59 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* ================= PREMIUM NAV POLISH ================= */
+
         .glass-dock {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            border: 1px solid rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: saturate(180%) blur(24px);
+            -webkit-backdrop-filter: saturate(180%) blur(24px);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-shadow:
+                0 20px 40px rgba(0, 0, 0, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
         }
+
+        /* Dock hover elevation */
+        .glass-dock:hover {
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        }
+
+        /* Nav buttons */
+        .nav-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.35s cubic-bezier(0.2, 1, 0.2, 1);
+            position: relative;
+        }
+
+        /* Hover micro-interaction */
+        .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.04);
+            transform: translateY(-2px) scale(1.06);
+        }
+
+        /* Active press */
+        .nav-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Tooltip refinement */
+        .nav-tooltip {
+            background: #1C1C1E;
+            color: white;
+            font-size: 10px;
+            padding: 6px 10px;
+            border-radius: 8px;
+            letter-spacing: 0.12em;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
 
         .bg-noise {
             position: fixed;
@@ -141,6 +188,38 @@
             opacity: 0.03;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
         }
+
+        /* ================= SCROLL-SPY ACTIVE ================= */
+
+        .nav-btn.active {
+            background: #1C1C1E;
+            color: white;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.25),
+                0 0 0 6px rgba(0, 122, 255, 0.12);
+            transform: scale(1.08);
+        }
+
+        .nav-btn.active i {
+            stroke-width: 2.5;
+        }
+
+        .apple-hero {
+            font-size: clamp(2.6rem, 6vw, 4.5rem);
+            font-family:'Playfair Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-weight: 800;
+            line-height: 1.25;
+            letter-spacing: -0.02em;
+            margin-bottom: 2.5rem;
+        }
+
+        .text-gradient {
+            background: linear-gradient(180deg, #1C1C1E 0%, #636366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+     
     </style>
     <script>
         tailwind.config = {
@@ -200,35 +279,42 @@
     <nav class="fixed right-6 top-1/2 transform -translate-y-1/2 z-[60] hidden md:block">
         <div class="glass-dock py-4 px-3 rounded-[32px] shadow-2xl flex flex-col items-center gap-4">
             <div class="flex flex-col items-center gap-1 pb-3 border-b border-zinc-200 w-full">
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-                    class="w-10 h-10 bg-apple-dark rounded-xl flex items-center justify-center text-white hover:scale-110 transition-transform">
+                <button data-section="home" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                    class="nav-btn text-zinc-600 hover:text-apple-dark group">
                     <i data-lucide="home" class="w-5 h-5"></i>
+                    <span class="nav-tooltip absolute right-16 top-1/2 -translate-y-1/2
+        opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Home</span>
                 </button>
             </div>
             <div class="flex flex-col items-center gap-4">
-                <button onclick="scrollToSection('arsenal')"
-                    class="w-10 h-10 hover:bg-zinc-100 rounded-xl flex items-center justify-center text-zinc-600 hover:text-apple-dark transition-all group relative">
+                <button data-section="arsenal" onclick="scrollToSection('arsenal')"
+                    class="nav-btn text-zinc-600 hover:text-apple-dark group">
                     <i data-lucide="cpu" class="w-5 h-5"></i>
-                    <span
-                        class="absolute right-14 top-1/2 -translate-y-1/2 bg-apple-dark text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Arsenal</span>
+
+                    <span class="nav-tooltip absolute right-16 top-1/2 -translate-y-1/2
+        opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                        Arsenal
+                    </span>
                 </button>
-                <button onclick="scrollToSection('projects')"
-                    class="w-10 h-10 hover:bg-zinc-100 rounded-xl flex items-center justify-center text-zinc-600 hover:text-apple-dark transition-all group relative">
+
+                <button data-section="projects" onclick="scrollToSection('projects')"
+                    class="nav-btn text-zinc-600 hover:text-apple-dark group">
                     <i data-lucide="layers" class="w-5 h-5"></i>
-                    <span
-                        class="absolute right-14 top-1/2 -translate-y-1/2 bg-apple-dark text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Work</span>
+                    <span class="nav-tooltip absolute right-16 top-1/2 -translate-y-1/2
+        opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Work</span>
                 </button>
-                <button onclick="scrollToSection('contact')"
-                    class="w-10 h-10 hover:bg-zinc-100 rounded-xl flex items-center justify-center text-zinc-600 hover:text-apple-dark transition-all group relative">
+                <button data-section="contact" onclick="scrollToSection('contact')"
+                    class="nav-btn text-zinc-600 hover:text-apple-dark group">
                     <i data-lucide="mail" class="w-5 h-5"></i>
-                    <span
-                        class="absolute right-14 top-1/2 -translate-y-1/2 bg-apple-dark text-white text-[10px] px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Connect</span>
+                    <span class="nav-tooltip absolute right-16 top-1/2 -translate-y-1/2
+        opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Connect</span>
                 </button>
             </div>
             <div class="pt-3 border-t border-zinc-200 w-full flex flex-col items-center">
-                <a href="./Mohit_CV.pdf" download title="Download CV"
-                    class="w-10 h-10 bg-apple-blue rounded-xl flex items-center justify-center text-white hover:shadow-lg transition-all">
+                <a href="./Mohit_CV.pdf" class="nav-btn text-zinc-600 hover:text-apple-dark group">
                     <i data-lucide="download" class="w-5 h-5"></i>
+                    <span class="nav-tooltip absolute right-16 top-1/2 -translate-y-1/2
+        opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Download CV</span>
                 </a>
             </div>
 
@@ -238,18 +324,18 @@
     <!-- Mobile Navigation Dock (Horizontal Bottom) -->
     <nav class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-[60] md:hidden">
         <div class="glass-dock px-3 py-3 rounded-[24px] shadow-2xl flex items-center gap-4">
-            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
-                class="w-10 h-10 bg-apple-dark rounded-xl flex items-center justify-center text-white">
+            <button data-section="home" onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+                class="nav-btn text-zinc-600 hover:text-apple-dark">
                 <i data-lucide="home" class="w-5 h-5"></i>
             </button>
-            <button onclick="scrollToSection('arsenal')" class="w-10 h-10 text-zinc-600"><i data-lucide="cpu"
+            <button data-section="arsenal" onclick="scrollToSection('arsenal')"
+                class="nav-btn text-zinc-600 hover:text-apple-dark"><i data-lucide="cpu" class="w-5 h-5"></i></button>
+            <button data-section="projects" onclick="scrollToSection('projects')"
+                class="nav-btn text-zinc-600 hover:text-apple-dark"><i data-lucide="layers"
                     class="w-5 h-5"></i></button>
-            <button onclick="scrollToSection('projects')" class="w-10 h-10 text-zinc-600"><i data-lucide="layers"
-                    class="w-5 h-5"></i></button>
-            <button onclick="scrollToSection('contact')" class="w-10 h-10 text-zinc-600"><i data-lucide="mail"
-                    class="w-5 h-5"></i></button>
-            <a href="./Mohit_CV.pdf" download title="Download CV"
-                class="w-10 h-10 bg-apple-blue rounded-xl flex items-center justify-center text-white shadow-lg active:scale-95 transition-transform">
+            <button data-section="contact" onclick="scrollToSection('contact')"
+                class="nav-btn text-zinc-600 hover:text-apple-dark"><i data-lucide="mail" class="w-5 h-5"></i></button>
+            <a href="./Mohit_CV.pdf" download title="Download CV" class="nav-btn text-zinc-600 hover:text-apple-dark">
                 <i data-lucide="download" class="w-5 h-5"></i>
             </a>
         </div>
@@ -263,11 +349,14 @@
                 <span class="text-apple-blue font-bold text-sm tracking-[0.2em] uppercase mb-6 block">Web Developer &
                     Designer</span>
 
-                <h1
-                    class="text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-gradient mb-8 leading-[1.15] lg:leading-[1.2]">
+                <h1 class="apple-hero text-gradient">
                     Mohit Agarwal
                 </h1>
-                <p class="text-xl md:text-2xl text-apple-gray font-medium leading-relaxed max-w-xl text-balance">
+                <p class="text-base sm:text-lg md:text-xl lg:text-2xl
+         text-apple-gray font-medium
+         leading-relaxed
+         w-full max-w-none sm:max-w-xl
+         text-balance">
                     Welcome to my portfolio.
                     <span class="text-apple-dark decoration-zinc-200 underline-offset-8"> I design and develop
                         responsive web experiences that look great on everything from pocket-sized screens to ultra-wide
@@ -291,13 +380,13 @@
                     </div>
                 </div>
 
-                <div class="mt-12 flex gap-4">
+                <div class="mt-12 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
                     <button onclick="scrollToSection('contact')"
-                        class="bg-apple-dark text-white px-8 py-4 rounded-2xl font-bold text-sm tracking-widest uppercase hover:bg-zinc-800 transition-all flex items-center gap-3">
+                        class="bg-apple-dark text-white px-8 py-4 rounded-2xl font-bold text-sm tracking-widest uppercase hover:bg-zinc-800 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
                         Get in Touch <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
                     <a href="./Mohit_CV.pdf" download
-                        class="bg-white text-black px-8 py-4 rounded-2xl font-bold text-sm tracking-widest uppercase border border-zinc-200 hover:bg-zinc-100 transition-all flex items-center gap-3">
+                        class="bg-white text-black px-8 py-4 rounded-2xl font-bold text-sm tracking-widest uppercase border border-zinc-200 hover:bg-zinc-100 transition-all flex items-center justify-center gap-3 w-full sm:w-auto">
                         Download CV <i data-lucide="download" class="w-4 h-4"></i>
                     </a>
 
@@ -342,7 +431,7 @@
 
             <div class="grid lg:grid-cols-2 gap-8 items-center">
                 <!-- Data Viz -->
-                <div class="bento-card p-12 flex flex-col items-center justify-center">
+                <div class="bento-card p-6 md:p-12 flex flex-col items-center justify-center">
                     <div class="chart-container">
                         <canvas id="arsenalChart"></canvas>
                     </div>
@@ -354,7 +443,7 @@
 
                 <!-- Skill Categories -->
                 <div class="space-y-6">
-                    <div class="bento-card p-8 group">
+                    <div class="bento-card p-6 md:p-8 group">
                         <div class="flex items-center gap-4 mb-6">
                             <div
                                 class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-apple-blue">
@@ -371,7 +460,7 @@
                         </div>
                     </div>
 
-                    <div class="bento-card p-8 group">
+                    <div class="bento-card p-6 md:p-8 group">
                         <div class="flex items-center gap-4 mb-6">
                             <div
                                 class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-indigo-500">
@@ -386,7 +475,7 @@
                         </div>
                     </div>
 
-                    <div class="bento-card p-8 group">
+                    <div class="bento-card p-6 md:p-8 group">
                         <div class="flex items-center gap-4 mb-6">
                             <div
                                 class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-sm text-slate-500">
@@ -422,7 +511,7 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
 
                 <div
-                    class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-xl transition-all duration-700 flex flex-col group">
+                    class="bg-white p-6 md:p-10 rounded-[40px] shadow-sm hover:shadow-xl transition-all duration-700 flex flex-col group">
 
                     <!-- Icon -->
                     <div
@@ -463,7 +552,7 @@
 
 
                 <div
-                    class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-xl transition-all duration-700 flex flex-col group">
+                    class="bg-white p-6 md:p-10 rounded-[40px] shadow-sm hover:shadow-xl transition-all duration-700 flex flex-col group">
 
                     <div
                         class="w-16 h-16 bg-apple-light rounded-3xl flex items-center justify-center text-zinc-800 mb-8 group-hover:scale-110 transition-transform">
@@ -498,7 +587,7 @@
                 </div>
 
                 <div
-                    class="bg-white p-10 rounded-[40px] shadow-sm hover:shadow-xl transition-all duration-700 flex flex-col group">
+                    class="bg-white p-6 md:p-10 rounded-[40px] shadow-sm hover:shadow-xl transition-all duration-700 flex flex-col group">
 
                     <!-- Icon -->
                     <div
@@ -556,7 +645,7 @@
                     <div class="relative flex items-center justify-between w-full">
                         <div class="w-5/12 text-right">
                             <span class="text-apple-blue font-bold text-[10px] uppercase tracking-widest">2026</span>
-                            <h4 class="text-lg font-bold mt-1">Full-Stack Architect</h4>
+                            <h4 class="text-sm md:text-lg font-bold mt-1">Full-Stack Architect</h4>
                         </div>
                         <div class="w-2 h-2 rounded-full bg-apple-blue z-10 shadow-[0_0_15px_#007AFF]"></div>
                         <div class="w-5/12"></div>
@@ -567,7 +656,7 @@
                         <div class="w-2 h-2 rounded-full bg-apple-dark z-10"></div>
                         <div class="w-5/12 text-left">
                             <span class="text-apple-gray font-bold text-[10px] uppercase tracking-widest">2025</span>
-                            <h4 class="text-lg font-bold mt-1">Modern Epoch</h4>
+                            <h4 class="text-sm md:text-lg font-bold mt-1">Modern Epoch</h4>
                             <p class="text-xs text-apple-gray mt-1 uppercase">React • GitHub • Firebase</p>
                         </div>
                     </div>
@@ -575,7 +664,7 @@
                     <div class="relative flex items-center justify-between w-full">
                         <div class="w-5/12 text-right">
                             <span class="text-apple-gray font-bold text-[10px] uppercase tracking-widest">2024</span>
-                            <h4 class="text-lg font-bold mt-1">Synthesis</h4>
+                            <h4 class="text-sm md:text-lg font-bold mt-1">Synthesis</h4>
                             <p class="text-xs text-apple-gray mt-1 uppercase">HTML • CSS • JS Basics</p>
                         </div>
                         <div class="w-2 h-2 rounded-full bg-apple-dark z-10"></div>
@@ -718,9 +807,48 @@
             el.classList.add('opacity-0', 'translate-y-10', 'transition-all', 'duration-1000', 'ease-out');
             observer.observe(el);
         });
+
+        const sections = [
+            { id: "home", offset: 0 },
+            { id: "arsenal" },
+            { id: "projects" },
+            { id: "contact" }
+        ];
+
+        const navButtons = document.querySelectorAll(".nav-btn");
+
+        function setActiveNav(sectionId) {
+            navButtons.forEach(btn => {
+                btn.classList.toggle(
+                    "active",
+                    btn.dataset.section === sectionId
+                );
+            });
+        }
+
+        function onScrollSpy() {
+            let current = "home";
+
+            sections.forEach(section => {
+                if (section.id === "home") return;
+
+                const el = document.getElementById(section.id);
+                if (!el) return;
+
+                const rect = el.getBoundingClientRect();
+                if (rect.top <= window.innerHeight * 0.35) {
+                    current = section.id;
+                }
+            });
+
+            setActiveNav(current);
+        }
+
+        window.addEventListener("scroll", onScrollSpy);
+
+        // Initial highlight
+        setActiveNav("home");
     </script>
 </body>
 
 </html>
-
-
